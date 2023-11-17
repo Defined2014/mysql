@@ -2191,11 +2191,11 @@ func TestEmptyPassword(t *testing.T) {
 
 // static interface implementation checks of mysqlConn
 var (
-	_ driver.ConnBeginTx        = &mysqlConn{}
-	_ driver.ConnPrepareContext = &mysqlConn{}
-	_ driver.ExecerContext      = &mysqlConn{}
-	_ driver.Pinger             = &mysqlConn{}
-	_ driver.QueryerContext     = &mysqlConn{}
+	_ driver.ConnBeginTx        = &MysqlConn{}
+	_ driver.ConnPrepareContext = &MysqlConn{}
+	_ driver.ExecerContext      = &MysqlConn{}
+	_ driver.Pinger             = &MysqlConn{}
+	_ driver.QueryerContext     = &MysqlConn{}
 )
 
 // static interface implementation checks of mysqlStmt

@@ -24,7 +24,7 @@ func (c *connector) Connect(ctx context.Context) (driver.Conn, error) {
 	var err error
 
 	// New mysqlConn
-	mc := &mysqlConn{
+	mc := &MysqlConn{
 		maxAllowedPacket: maxPacketSize,
 		maxWriteSize:     maxPacketSize - 1,
 		closech:          make(chan struct{}),

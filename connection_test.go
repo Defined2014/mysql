@@ -18,7 +18,7 @@ import (
 )
 
 func TestInterpolateParams(t *testing.T) {
-	mc := &mysqlConn{
+	mc := &MysqlConn{
 		buf:              newBuffer(nil),
 		maxAllowedPacket: maxPacketSize,
 		cfg: &Config{
@@ -38,7 +38,7 @@ func TestInterpolateParams(t *testing.T) {
 }
 
 func TestInterpolateParamsJSONRawMessage(t *testing.T) {
-	mc := &mysqlConn{
+	mc := &MysqlConn{
 		buf:              newBuffer(nil),
 		maxAllowedPacket: maxPacketSize,
 		cfg: &Config{
@@ -65,7 +65,7 @@ func TestInterpolateParamsJSONRawMessage(t *testing.T) {
 }
 
 func TestInterpolateParamsTooManyPlaceholders(t *testing.T) {
-	mc := &mysqlConn{
+	mc := &MysqlConn{
 		buf:              newBuffer(nil),
 		maxAllowedPacket: maxPacketSize,
 		cfg: &Config{
@@ -82,7 +82,7 @@ func TestInterpolateParamsTooManyPlaceholders(t *testing.T) {
 // We don't support placeholder in string literal for now.
 // https://github.com/go-sql-driver/mysql/pull/490
 func TestInterpolateParamsPlaceholderInString(t *testing.T) {
-	mc := &mysqlConn{
+	mc := &MysqlConn{
 		buf:              newBuffer(nil),
 		maxAllowedPacket: maxPacketSize,
 		cfg: &Config{
@@ -98,7 +98,7 @@ func TestInterpolateParamsPlaceholderInString(t *testing.T) {
 }
 
 func TestInterpolateParamsUint64(t *testing.T) {
-	mc := &mysqlConn{
+	mc := &MysqlConn{
 		buf:              newBuffer(nil),
 		maxAllowedPacket: maxPacketSize,
 		cfg: &Config{
@@ -117,7 +117,7 @@ func TestInterpolateParamsUint64(t *testing.T) {
 
 func TestCheckNamedValue(t *testing.T) {
 	value := driver.NamedValue{Value: ^uint64(0)}
-	x := &mysqlConn{}
+	x := &MysqlConn{}
 	err := x.CheckNamedValue(&value)
 
 	if err != nil {
@@ -132,7 +132,7 @@ func TestCheckNamedValue(t *testing.T) {
 // TestCleanCancel tests passed context is cancelled at start.
 // No packet should be sent.  Connection should keep current status.
 func TestCleanCancel(t *testing.T) {
-	mc := &mysqlConn{
+	mc := &MysqlConn{
 		closech: make(chan struct{}),
 	}
 	mc.startWatcher()
@@ -159,7 +159,7 @@ func TestCleanCancel(t *testing.T) {
 
 func TestPingMarkBadConnection(t *testing.T) {
 	nc := badConnection{err: errors.New("boom")}
-	ms := &mysqlConn{
+	ms := &MysqlConn{
 		netConn:          nc,
 		buf:              newBuffer(nc),
 		maxAllowedPacket: defaultMaxAllowedPacket,
@@ -174,7 +174,7 @@ func TestPingMarkBadConnection(t *testing.T) {
 
 func TestPingErrInvalidConn(t *testing.T) {
 	nc := badConnection{err: errors.New("failed to write"), n: 10}
-	ms := &mysqlConn{
+	ms := &MysqlConn{
 		netConn:          nc,
 		buf:              newBuffer(nc),
 		maxAllowedPacket: defaultMaxAllowedPacket,
